@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`index works 1`] = `
+Object {
+  "checksum": "493044275b17830df3b803d2500dd7ff",
+  "filename": "index-works-1-snap.png",
+  "type": "image",
+}
+`;
+
+exports[`index works 2`] = `
+Object {
+  "checksum": "493044275b17830df3b803d2500dd7ff",
+  "filename": "index-works-2-snap.png",
+  "type": "image",
+}
+`;

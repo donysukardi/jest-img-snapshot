@@ -57,3 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
+# Diff output folders
+__diff_output__
