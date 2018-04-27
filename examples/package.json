@@ -1,0 +1,30 @@
+{
+  "name": "jest-img-snapshot-examples",
+  "version": "0.0.0",
+  "description": "Example jest-img-snapshot usage",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "jest-img-snapshot",
+    "examples"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/donysukardi/jest-img-snapshot.git"
+  },
+  "author": "Dony Sukardi ds@ds.io> (https://github.com/donysukardi)",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "jest": "^22.0.0",
+    "puppeteer": "^0.13.0"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/jest-setup.js"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}

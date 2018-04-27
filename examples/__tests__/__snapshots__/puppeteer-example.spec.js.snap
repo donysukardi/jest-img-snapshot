@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`jest-image-snapshot usage with an image received from puppeteer works 1`] = `
+Object {
+  "checksum": "9c836c3c365355766335ee9786fc8125",
+  "filename": "jest-image-snapshot-usage-with-an-image-received-from-puppeteer-works-1-snap.png",
+  "type": "image",
+}
+`;

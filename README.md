@@ -1,3 +1,3 @@
-# jest-img-snap
+# jest-img-snapshot
 
 Inspired by jest-image-snapshot
