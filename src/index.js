@@ -120,6 +120,7 @@ function configureToMatchImageSnapshot({
 
       if(_updateSnapshot === 'all') {
         mkdirp.sync(imgSnapshotDir);
+        
         // It's a passing test, remove previous diff artefact
         if(fs.existsSync(diffOutputPath)) {
           fs.unlinkSync(diffOutputPath);
