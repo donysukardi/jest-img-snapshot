@@ -70,17 +70,12 @@ function configureToMatchImageSnapshot({
       });
     }
 
-    let autoUpdated = false;
     let pass = false;
 
-    mkdirp.sync(imgSnapshotDir);
-    
-    if((_updateSnapshot === 'new' && !fs.existsSync(baselineSnapshotPath)) || _updateSnapshot === 'all') {
+    if((_updateSnapshot === 'new' && !fs.existsSync(baselineSnapshotPath))) {
+      mkdirp.sync(imgSnapshotDir);
       fs.writeFileSync(baselineSnapshotPath, received);
       console.log("Written image to path: " + baselineSnapshotPath);
-      if(fs.existsSync(diffOutputPath)) {
-        fs.unlinkSync(diffOutputPath);
-      }
       pass = true;
     } else {
       const defaultDiffConfig = {
@@ -117,45 +112,46 @@ function configureToMatchImageSnapshot({
         pass = true;
       } else if (failureThresholdType === 'pixel') {
         pass = diffPixelCount <= failureThreshold;
-        autoUpdated = pass;
       } else if (failureThresholdType === 'percent') {
         pass = diffRatio <= failureThreshold;
-        autoUpdated = pass;
       } else {
         throw new Error(`Unknown failureThresholdType: ${failureThresholdType}. Valid options are "pixel" or "percent".`);
       }
 
-      if (!pass) {
-        generateDiffImage({
-          baselineImage,
-          receivedImage,
-          diffImage,
-          imageWidth,
-          imageHeight,
-          diffOutputDir,
-          diffOutputPath
-        })
-      } else {
+      if(_updateSnapshot === 'all') {
+        mkdirp.sync(imgSnapshotDir);
         // It's a passing test, remove previous diff artefact
         if(fs.existsSync(diffOutputPath)) {
           fs.unlinkSync(diffOutputPath);
         }
-      }
 
-      if(autoUpdated) {
-        fs.writeFileSync(baselineSnapshotPath, received);
-        console.log("Updated image on path: " + baselineSnapshotPath + "\n  with diff ratio: " + diffRatio + " and diff pixel count: " + diffPixelCount);
+        if(diffPixelCount !== 0) {
+          fs.writeFileSync(baselineSnapshotPath, received);
+          console.log("Updated image on path: " + baselineSnapshotPath + "\n  with diff ratio: " + diffRatio + " and diff pixel count: " + diffPixelCount);
+        }
+
+        pass = true;
+      } else {
+        if(pass && diffPixelCount !== 0) {
+          // use expectedBuffer so that the test will pass
+          snapshotValue.checksum = checksum(JSON.stringify(expectedBuffer));
+        }
+
+        if (!pass) {
+          generateDiffImage({
+            baselineImage,
+            receivedImage,
+            diffImage,
+            imageWidth,
+            imageHeight,
+            diffOutputDir,
+            diffOutputPath
+          })
+        }
       }
     }
 
-    if(autoUpdated) {
-      const updateSnapshotBak = snapshotState._updateSnapshot;
-      snapshotState._updateSnapshot = 'all';
-      snapshot.toMatchSnapshot.call(this, snapshotValue, customName);
-      snapshotState._updateSnapshot = updateSnapshotBak;
-    } else {
-      snapshot.toMatchSnapshot.call(this, snapshotValue, customName);
-    }
+    snapshot.toMatchSnapshot.call(this, snapshotValue, customName);
 
     if(pass) {
       return {

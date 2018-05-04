@@ -2,7 +2,7 @@
 
 exports[`jest-image-snapshot usage with an image received from puppeteer works 1`] = `
 Object {
-  "checksum": "9c836c3c365355766335ee9786fc8125",
+  "checksum": "42272617caf4c6414cae2f236af653d2",
   "filename": "jest-image-snapshot-usage-with-an-image-received-from-puppeteer-works-1-snap.png",
   "type": "image",
 }
