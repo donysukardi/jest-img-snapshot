@@ -5,7 +5,6 @@
   "license": "MIT",
   "author": "Dony Sukardi <ds@dsds.io> (https://github.com/donysukardi)",
   "dependencies": {
-    "crypto": "^1.0.1",
     "get-stdin": "^6.0.0",
     "jest": "^22.4.3",
     "jest-matcher-utils": "^22.4.3",
@@ -46,7 +45,9 @@
     }
   },
   "jest": {
-    "testPathIgnorePatterns": 
-      ["/node_modules/", "<rootDir>/examples/"]
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/examples/"
+    ]
   }
 }
