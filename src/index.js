@@ -135,6 +135,7 @@ function configureToMatchImageSnapshot({
         if(pass && diffPixelCount !== 0) {
           // use expectedBuffer so that the test will pass
           snapshotValue.checksum = checksum(JSON.stringify(expectedBuffer));
+          console.log("Snapshot on path: " + baselineSnapshotPath + "\n passes with diff ratio: " + diffRatio + " and diff pixel count: " + diffPixelCount);
         }
 
         if (!pass) {
