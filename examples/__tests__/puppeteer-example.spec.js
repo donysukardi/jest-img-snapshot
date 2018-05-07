@@ -2,7 +2,7 @@
 // eslint-disable-next-line import/no-unresolved
 const puppeteer = require('puppeteer');
 
-describe('jest-image-snapshot usage with an image received from puppeteer', () => {
+describe('jest-img-snapshot with puppeteer', () => {
   let browser;
 
   beforeAll(async () => {
