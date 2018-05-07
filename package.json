@@ -45,6 +45,7 @@
     }
   },
   "jest": {
+    "roots": ["<rootDir>/src/"],
     "testPathIgnorePatterns": [
       "/node_modules/",
       "<rootDir>/examples/"

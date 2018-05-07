@@ -11,7 +11,7 @@ describe('jest-image-snapshot usage with an image received from puppeteer', () =
 
   it('works', async () => {
     const page = await browser.newPage();
-    await page.goto('https://google.com');
+    await page.goto('https://example.com');
     const image = await page.screenshot();
 
     expect(image).toMatchImageSnapshot();

@@ -1,6 +1,8 @@
+const path = require('path');
 const { PNG } = require('pngjs');
 const fs = require('fs');
 const getStdin = require('get-stdin');
+const mkdirp = require('mkdirp');
 
 getStdin.buffer().then((buffer) => {
   try {
@@ -10,6 +12,7 @@ getStdin.buffer().then((buffer) => {
     image.data = Buffer.from(image.data);
 
     const pngBuffer = PNG.sync.write(image);
+    mkdirp.sync(path.dirname(imagePath));
     fs.writeFileSync(imagePath, pngBuffer);
     process.exit(0);
   } catch (error) {

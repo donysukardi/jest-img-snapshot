@@ -1,7 +1,6 @@
 const { PNG } = require('pngjs');
 const pixelmatch = require('pixelmatch');
 const childProcess = require('child_process');
-const mkdirp = require('mkdirp');
 
 /**
  * Helper function to create reusable image resizer
@@ -100,32 +99,34 @@ function diffImages(
   }
 }
 
-function generateDiffImage({
+function generateCompositeDiffImage(
   baselineImage,
   receivedImage,
   diffImage,
-  imageWidth,
-  imageHeight,
-  diffOutputDir,
-  diffOutputPath
-}) {
-  mkdirp.sync(diffOutputDir);
+) {
+  const { width, height } = diffImage;
   const compositeResultImage = new PNG({
-    width: imageWidth * 3,
-    height: imageHeight,
+    width: width * 3,
+    height: height,
   });
   // copy baseline, diff, and received images into composite result image
   PNG.bitblt(
-    baselineImage, compositeResultImage, 0, 0, imageWidth, imageHeight, 0, 0
+    baselineImage, compositeResultImage, 0, 0, width, height, 0, 0
   );
   PNG.bitblt(
-    diffImage, compositeResultImage, 0, 0, imageWidth, imageHeight, imageWidth, 0
+    diffImage, compositeResultImage, 0, 0, width, height, width, 0
   );
   PNG.bitblt(
-    receivedImage, compositeResultImage, 0, 0, imageWidth, imageHeight, imageWidth * 2, 0
+    receivedImage, compositeResultImage, 0, 0, width, height, width * 2, 0
   );
+  return compositeResultImage;
+}
 
-  const input = { imagePath: diffOutputPath, image: compositeResultImage };
+function writeDiffImage(
+  diffOutputPath,
+  compositeImage
+) {
+  const input = { imagePath: diffOutputPath, image: compositeImage };
   // image._packer property contains a circular reference since node9, causing JSON.stringify to
   // fail. Might as well discard all the hidden properties.
   const serializedInput = JSON.stringify(input, (name, val) => (name[0] === '_' ? undefined : val));
@@ -137,4 +138,5 @@ function generateDiffImage({
 }
 
 module.exports.diffImages = diffImages;
-module.exports.generateDiffImage = generateDiffImage;
+module.exports.generateCompositeDiffImage = generateCompositeDiffImage;
+module.exports.writeDiffImage = writeDiffImage;

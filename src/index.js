@@ -5,7 +5,7 @@ const mkdirp = require('mkdirp');
 const { PNG } = require('pngjs');
 const Chalk = require('chalk').constructor;
 const { RECEIVED_COLOR, EXPECTED_COLOR, matcherHint } = require('jest-matcher-utils');
-const { diffImages, generateDiffImage } = require('./diff-images');
+const { diffImages, generateCompositeDiffImage, writeDiffImage } = require('./diff-images');
 const { patchSnapshotState } = require('./patch-snapshot-state');
 const { getImageSnapshotFilename, getDiffFilename, getTestnamePrefix, checksum } = require('./utils');
 
@@ -97,8 +97,6 @@ function configureToMatchImageSnapshot({
 
       const {
         hasSizeMismatch,
-        imageWidth,
-        imageHeight,
         receivedImage,
         baselineImage,
         diffImage,
@@ -140,15 +138,12 @@ function configureToMatchImageSnapshot({
         }
 
         if (!pass) {
-          generateDiffImage({
+          const compositeResultImage = generateCompositeDiffImage(
             baselineImage,
             receivedImage,
-            diffImage,
-            imageWidth,
-            imageHeight,
-            diffOutputDir,
-            diffOutputPath
-          })
+            diffImage
+          );
+          writeDiffImage(diffOutputPath, compositeResultImage);
         }
       }
     }
