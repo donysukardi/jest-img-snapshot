@@ -6,9 +6,11 @@ This project was heavily inspired by [jest-image-snapshot](https://github.com/am
 
 ## Overview
 
-Internally, it uses Jest's snapshot features by keeping track of snapshot changes using checksum of the serialized image, passing and failing the snapshot tests accordingly. This means you get interactive update for failing snapshot tests, removal of obsolete snapshots out of the box.
+Internally, it works around Jest's snapshot features by keeping track of snapshot changes using checksum of the serialized image, passing and failing the snapshot tests accordingly according to the image comparison. This means you get interactive update for failing snapshot tests, removal of obsolete snapshots out of the box.
 
 Note that when update flag is not specified and the image comparison falls within the specified threshold, the library will not perform any update and pass the test using the previously stored checksum.
+
+As jest has yet to expose any hooks for obsolete snapshots, this library monkey patches some functions in jest's snapshotState to perform necessary clean up of the image files.
 
 ## Usage
 
