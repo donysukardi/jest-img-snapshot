@@ -6,9 +6,6 @@
   "author": "Dony Sukardi <ds@dsds.io> (https://github.com/donysukardi)",
   "dependencies": {
     "get-stdin": "^6.0.0",
-    "jest": "^22.4.3",
-    "jest-matcher-utils": "^22.4.3",
-    "jest-snapshot": "^22.4.3",
     "lodash.kebabcase": "^4.1.1",
     "mkdirp": "^0.5.1",
     "pixelmatch": "^4.0.2",
@@ -33,7 +30,13 @@
     "eslint-plugin-react": "^7.1.0",
     "prettier": "^1.12.1",
     "semantic-release": "^15.2.0",
-    "travis-deploy-once": "^5.0.0"
+    "travis-deploy-once": "^5.0.0",
+    "jest": "^22.4.3",
+    "jest-matcher-utils": "^22.4.3",
+    "jest-snapshot": "^22.4.3"
+  },
+  "peerDependencies": {
+    "jest": ">=20 <=22"
   },
   "repository": {
     "type": "git",
